@@ -1,0 +1,20 @@
+form input {
+  @apply h-10 mb-3 sm:mb-0 border-b-slate-600 border-b rounded-sm focus:outline-none w-full focus-within:border-blue-500 focus:border-b-2;
+}
+/* bg-gray-200 hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:shadow-outline focus:border-gray-300 */
+
+textarea {
+  @apply indent-3 border rounded-md;
+}
+
+label {
+  @apply after:content-['*'] after:text-red-500 after:ml-1 text-sm;
+}
+
+form span {
+  @apply text-sm text-red-600 h-4 mb-2;
+}
+
+/* .input-box {
+  @apply w-[90%];
+} */
