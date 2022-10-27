@@ -2,6 +2,7 @@
   "name": "ocr-project",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
@@ -17,6 +18,8 @@
     "ag-grid-community": "^28.2.0",
     "ag-grid-enterprise": "^28.2.0",
     "ag-grid-react": "^28.2.0",
+    "dwt": "17.3.0",
+    "ncp": "^2.0.0",
     "axios": "^1.1.2",
     "fs": "^0.0.1-security",
     "json-server": "^0.17.0",
@@ -35,9 +38,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "ncp node_modules/dwt/dist public/dwt-resources && react-scripts start",
+    "build": "react-scripts build && ncp node_modules/dwt/dist build/dwt-resources",
+    "test": "ncp node_modules/dwt/dist public/dwt-resources && react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

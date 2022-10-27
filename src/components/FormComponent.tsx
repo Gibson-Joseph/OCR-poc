@@ -5,6 +5,7 @@ import { PdfUpload } from "./";
 import loadinSpinner from "../assets/refresh.svg";
 import toastMsg from "../service/toast/toast";
 import { ToastContainer } from "react-toastify";
+import Scanner from "../Scanner";
 
 const FormComponent = () => {
   const [pdfFile, setPdfFile] = useState<any>(null);
@@ -12,6 +13,9 @@ const FormComponent = () => {
   const [userData, setUserData] = useState<any>();
   const [resErr, setResErr] = useState<boolean>(false);
   const [back, setBack] = useState<boolean>(false);
+  const [path, setPath] = useState<any>()
+  console.log("path", path);
+
 
   useEffect(() => {
     if (pdfFile !== null) {
@@ -19,6 +23,7 @@ const FormComponent = () => {
         setPdfFileErr(true);
       } else {
         setPdfFileErr(false);
+        console.log("path", path);
         console.log("Api calling-----");
         pdfFile !== null && console.log("pdfFile.file.type---", pdfFile["0"]);
         const formData = new FormData();
@@ -57,8 +62,8 @@ const FormComponent = () => {
         </h1>
       </header>
       <div className="w-full h-full">
-        {!back && (pdfFile === null || pdfFileErr) && (
-          <PdfUpload setPdfFile={setPdfFile} pdfFileErr={pdfFileErr} />
+        {/* {!back && (pdfFile === null || pdfFileErr) && (
+          <PdfUpload setPdfFile={setPdfFile} pdfFileErr={pdfFileErr} setPath={setPath} />
         )}
         {back &&
           ((pdfFile !== null && !pdfFileErr && userData !== undefined) ||
@@ -69,8 +74,9 @@ const FormComponent = () => {
               setBack={setBack}
               back={back}
             />
-          )}
-
+          )} */}
+        <Scanner />
+  
         {pdfFile !== null && !pdfFileErr && userData === undefined && !resErr && (
           <div className="w-full h-full flex justify-center items-center">
             <img
