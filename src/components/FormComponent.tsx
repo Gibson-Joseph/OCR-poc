@@ -66,20 +66,9 @@ const FormComponent = () => {
         </h1>
       </header>
       <div className="w-full h-full">
-        {/* {!back && (pdfFile === null || pdfFileErr) && (
-          <PdfUpload setPdfFile={setPdfFile} pdfFileErr={pdfFileErr} setPath={setPath} />
-        )}
-        {back &&
-          ((pdfFile !== null && !pdfFileErr && userData !== undefined) ||
-            resErr) && (
-            <UserForm
-              userData={userData}
-              setPdfFile={setPdfFile}
-              setBack={setBack}
-              back={back}
-            />
-          )} */}
-        {userData === undefined && <Scanner setUserData={setUserData} setBack={setBack}/>}
+
+
+        {/* {userData === undefined && <Scanner setUserData={setUserData} setBack={setBack} />}
 
         {
           userData !== undefined && <UserForm
@@ -88,27 +77,28 @@ const FormComponent = () => {
             setBack={setBack}
             back={back}
           />
-        }
+        } */}
+
+<Scanner setUserData={setUserData} setBack={setBack} />
+
+{/* {
+  userData !== undefined && <UserForm
+    userData={userData}
+    setPdfFile={setPdfFile}
+    setBack={setBack}
+    back={back}
+  />
+} */}
 
 
-{userData === undefined && back &&
-  <div className="w-full h-full flex justify-center items-center">
-            <img
-              className="animate-spin h-12"
-              src={loadinSpinner}
-              alt="loading ..."
-            />
-          </div>}
-        {/* <button onClick={() => scann()}>Scan</button> */}
-        {/* {pdfFile !== null && !pdfFileErr && userData === undefined && !resErr && (
+        {userData === undefined && back &&
           <div className="w-full h-full flex justify-center items-center">
             <img
               className="animate-spin h-12"
               src={loadinSpinner}
               alt="loading ..."
             />
-          </div>
-        )} */}
+          </div>}
       </div>
     </div>
   );

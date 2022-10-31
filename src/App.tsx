@@ -10,7 +10,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />} />
-        <Route path="/form" element={<FormComponent />} />
+        <Route path="/scanner" element={<FormComponent />} />
+        <Route path="/form" element={<UserForm/>}/>
       </Routes>
     </BrowserRouter>
 

@@ -80,7 +80,7 @@ const Table = () => {
   );
 
   const clickNav = () => {
-    navigate("/form");
+    navigate("/scanner");
   };
 
   useEffect(() => {
