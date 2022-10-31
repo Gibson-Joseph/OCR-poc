@@ -465,7 +465,7 @@ export default function DWTController(props) {
                                             : ""}
                                     </li> */}
                                         <li className="tc">
-                                            {(props.features & 0b1000) ? <button tabIndex="4" className={props.buffer.count === 0 ? "majorButton disabled width_48p" : "majorButton enabled width_48p"} disabled={props.buffer.count === 0 ? "disabled" : ""} onClick={() => saveOrUploadImage('local')} >Save to Local</button> : ""}
+                                            {(props.features & 0b1000) ? <button tabIndex="4" className={props.buffer.count === 0 ? "majorButton disabled width_48p" : "majorButton enabled width_48p"} disabled={props.buffer.count === 0 ? "disabled" : ""} onClick={() => saveOrUploadImage('local')} >Upload</button> : ""}
                                             {/* {(props.features & 0b10000) ? <button tabIndex="4" className={props.buffer.count === 0 ? "majorButton disabled width_48p marginL_2p" : "majorButton enabled width_4p marginL_2p"} disabled={props.buffer.count === 0 ? "disabled" : ""} onClick={() => saveOrUploadImage('server')} >Upload to Server</button> : ""} */}
                                         </li>
                                     </ul>
