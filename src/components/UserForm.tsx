@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 
 import Api from "../helpers/interceptor/interceptor";
 import toastMsg from "../service/toast/toast";
@@ -23,6 +23,27 @@ type FormValue = {
 
 const UserForm = ({ userData, setBack, back }: any) => {
   console.log("form State----", userData);
+const location=useLocation()
+console.log("location.state",location.state);
+
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<FormValue>({
+  //   defaultValues: {
+  //     name: userData?.data?.row.Name,
+  //     door_no: userData?.data?.row.Door_No,
+  //     address: userData?.data?.row.Address,
+  //     city: userData?.data?.row.City,
+  //     pin_code: userData?.data?.row.Pincode,
+  //     taluk: userData?.data?.row.Taluk,
+  //     district: userData?.data?.row.District,
+  //     mobile: userData?.data?.row.Mobile,
+  //     landline: userData?.data?.row.Landline,
+  //     email: userData?.data?.row["e-mail"],
+  //   },
+  // });
 
   const {
     register,
@@ -30,25 +51,24 @@ const UserForm = ({ userData, setBack, back }: any) => {
     formState: { errors },
   } = useForm<FormValue>({
     defaultValues: {
-      name: userData?.data?.row.Name,
-      door_no: userData?.data?.row.Door_No,
-      address: userData?.data?.row.Address,
-      city: userData?.data?.row.City,
-      pin_code: userData?.data?.row.Pincode,
-      taluk: userData?.data?.row.Taluk,
-      district: userData?.data?.row.District,
-      mobile: userData?.data?.row.Mobile,
-      landline: userData?.data?.row.Landline,
-      email: userData?.data?.row["e-mail"],
+      name: location.state?.data?.row.Name,
+      door_no: location.state?.data?.row.Door_No,
+      address: location.state?.data?.row.Address,
+      city: location.state?.data?.row.City,
+      pin_code: location.state?.data?.row.Pincode,
+      taluk: location.state?.data?.row.Taluk,
+      district: location.state?.data?.row.District,
+      mobile: location.state?.data?.row.Mobile,
+      landline: location.state?.data?.row.Landline,
+      email: location.state?.data?.row["e-mail"],
     },
   });
 
   const navigate = useNavigate();
 
   const backNavigation = () => {
-    // navigate("/");
-    // setPdfFile(null);
-    setBack(!back);
+    navigate("/");
+
   };
 
   const onSubmit = (data: FormValue) => {
@@ -150,7 +170,7 @@ const UserForm = ({ userData, setBack, back }: any) => {
           <div className="input-box">
             <label htmlFor="">Taluk</label>
             <input
-              type="text"
+              type="text" 
               placeholder="Enter your taluk"
               {...register("taluk", { required: true })}
             />

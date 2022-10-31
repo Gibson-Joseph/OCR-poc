@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-const PdfUpload = ({ setPdfFile, pdfFileErr }: any) => {
+const PdfUpload = ({ setPdfFile, pdfFileErr,setPath }: any) => {
+
   return (
     <div className="max-w-xl flex flex-col justify-center items-center m-auto h-full">
       <label
-        className={`flex justify-center w-full h-32 px-4 transition bg-white border-2 ${
-          pdfFileErr ? "border-red-500" : "border-gray-300"
-        }  border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none items-center`}
+        className={`flex justify-center w-full h-32 px-4 transition bg-white border-2 ${pdfFileErr ? "border-red-500" : "border-gray-300"
+          }  border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none items-center`}
       >
         <span className="flex items-center space-x-2">
           <svg
@@ -30,7 +30,11 @@ const PdfUpload = ({ setPdfFile, pdfFileErr }: any) => {
         </span>
         <input
           required
-          onChange={(e: any) => setPdfFile(e.target.files)}
+          onChange={(e: any) => {
+            setPath(URL.createObjectURL(e.target.files["0"]))
+            // console.log("path", path);
+            setPdfFile(e.target.files)
+          }}
           type="file"
           name="file_upload"
           className="hidden"
