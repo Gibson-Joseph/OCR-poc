@@ -68,8 +68,7 @@ console.log("location.state",location.state);
 
   const backNavigation = () => {
     navigate("/");
-    // setPdfFile(null);
-    // setBack(!back);
+
   };
 
   const onSubmit = (data: FormValue) => {

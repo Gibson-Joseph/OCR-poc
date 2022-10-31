@@ -8,54 +8,9 @@ import { ToastContainer } from "react-toastify";
 import Scanner from "../Scanner";
 
 const FormComponent = () => {
-  const [pdfFile, setPdfFile] = useState<any>(null);
   const [userData, setUserData] = useState<any>();
   const [back, setBack] = useState<boolean>(false);
-  // const [path, setPath] = useState<any>()
-  // console.log("path", path);
 
-
-  useEffect(() => {
-    // if (pdfFile !== null) {
-    //   if (pdfFile["0"].type !== "application/pdf") {
-    //     setPdfFileErr(true);
-    //   } else {
-    //     setPdfFileErr(false);
-    //     console.log("path", path);
-    //     console.log("Api calling-----");
-    //     pdfFile !== null && console.log("pdfFile.file.type---", pdfFile["0"]);
-    //     console.log(" pdfFile[0]------", pdfFile["0"]);
-
-    //     const formData = new FormData();
-    //     formData.append("file", pdfFile["0"]);
-
-    //     console.log("formData--", formData);
-
-    //     Api("/v1/save_pdf", {
-    //       method: "POST",
-    //       data: formData,
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //     })
-    //       .then((data: any) => {
-    //         setUserData(data.data);
-    //         setBack(true);
-    //         console.log(userData);
-    //       })
-    //       .catch((err) => {
-    //         console.log("response err", err);
-    //         toastMsg("error", "Could not upload file please enter manualy");
-    //         setResErr(true);
-    //         setBack(true);
-    //       });
-    //   }
-    // }
-  }, [pdfFile]);
-
-  // const scann = () => {
-  //   window.print()
-  // }
 
   return (
     <div className="h-screen">
@@ -67,38 +22,8 @@ const FormComponent = () => {
       </header>
       <div className="w-full h-full">
 
-
-        {/* {userData === undefined && <Scanner setUserData={setUserData} setBack={setBack} />}
-
-        {
-          userData !== undefined && <UserForm
-            userData={userData}
-            setPdfFile={setPdfFile}
-            setBack={setBack}
-            back={back}
-          />
-        } */}
-
 <Scanner setUserData={setUserData} setBack={setBack} />
 
-{/* {
-  userData !== undefined && <UserForm
-    userData={userData}
-    setPdfFile={setPdfFile}
-    setBack={setBack}
-    back={back}
-  />
-} */}
-
-
-        {userData === undefined && back &&
-          <div className="w-full h-full flex justify-center items-center">
-            <img
-              className="animate-spin h-12"
-              src={loadinSpinner}
-              alt="loading ..."
-            />
-          </div>}
       </div>
     </div>
   );

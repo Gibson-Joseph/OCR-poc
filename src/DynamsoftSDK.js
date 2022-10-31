@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import Dynamsoft from "dwt";
+import loadinSpinner from "./assets/refresh.svg"
 const DWTUserInterface = React.lazy(() => import("./dwt/DWTUserInterface"));
 
 let featureSet = {
@@ -32,6 +33,7 @@ export default function DWT(props) {
   const [startTime] = useState(new Date().getTime());
   const [unSupportedEnv, setUnSupportedEnv] = useState(false);
   const [dwt, setDwt] = useState(null);
+  const [loading, setLoading] = useState(false)
   /** status
    * 0:  "Initializing..."
    * 1:  "Core Ready..." (scan)
@@ -248,11 +250,19 @@ export default function DWT(props) {
   return unSupportedEnv ? (
     <div>Please use Chrome, Firefox or Edge on Windows!</div>
   ) : (
-    <div>
+    <div className="w-full h-screen">
+      {loading && <div className="w-full h-full flex justify-center items-center">
+        <img
+          className="animate-spin h-12"
+          src={loadinSpinner}
+          alt="loading ..."
+        />
+      </div>}
       <Suspense fallback={<div>Loading...</div>}>
-        <DWTUserInterface
-        setBack={props.setBack}
-        setUserData={props.setUserData}
+        {!loading && <DWTUserInterface
+          setLoading={setLoading}
+          setBack={props.setBack}
+          setUserData={props.setUserData}
           Dynamsoft={Dynamsoft}
           features={features}
           containerId={containerId}
@@ -268,7 +278,7 @@ export default function DWT(props) {
           }
           handleStatusChange={(value) => handleStatusChange(value)}
           handleBufferChange={() => handleBufferChange()}
-        />
+        />}
       </Suspense>
     </div>
   );
