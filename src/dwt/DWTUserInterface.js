@@ -168,6 +168,7 @@ export default function DWTUserInterface(props) {
                 />
                 <Suspense>
                     <DWTController
+                    setLoading={props.setLoading}
                         setBack={props.setBack}
                         setUserData={props.setUserData}
                         Dynamsoft={props.Dynamsoft}

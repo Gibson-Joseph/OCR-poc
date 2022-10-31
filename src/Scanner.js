@@ -16,6 +16,9 @@ function Scanner(props) {
           <a href="https://www.dynamsoft.com" target="_blank" rel="noopener noreferrer" ><img src={DynamsoftLogo} className="ds-logo" alt="Dynamsoft Logo" /></a>
         </header> */}
       <br />
+
+
+
       <DWT 
       setBack={props.setBack}
         setUserData={props.setUserData}

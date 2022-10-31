@@ -182,7 +182,7 @@ export default function DWTView(props){
                         <li><img tabIndex="6" value="changeSize" src="Images/ChangeSize.png" title="Change Image Size" alt="Change Size" /> </li>
                         <li><img tabIndex="6" value="crop" src="Images/Crop.png" title="Crop" alt="Crop" /></li>
                     </ul> */}
-                    <div className="ImgSizeEditor" style={bShowChangeSizeUI ? { visibility: "visible" } : { visibility: "hidden" }}>
+                    {/* <div className="ImgSizeEditor" style={bShowChangeSizeUI ? { visibility: "visible" } : { visibility: "hidden" }}>
                         <ul>
                             <li>
                                 <label>New Height (pixel): <input tabIndex="6" type="text" value={newHeight} className="width_48p floatR" onChange={(event) => handleNewSize(event, true)} /></label>
@@ -199,7 +199,7 @@ export default function DWTView(props){
                                 <button tabIndex="6" className="width_48p floatR" value="changeSize" onClick={(event) => handleQuickEdit(event)} >Cancel</button>
                             </li>
                         </ul>
-                    </div>
+                    </div> */}
                 </div>
                 <div style={{ position: "relative", float: "left", width: width, height: height }} id={props.containerId}>
                     {props.barcodeRects.map((_rect, _index) => (
