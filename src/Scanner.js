@@ -5,30 +5,32 @@ import React from 'react';
 import "./scanner.css"
 import DWT from './DynamsoftSDK';
 
-function Scanner() {
-  return(
+function Scanner(props) {
+  return (
     <div className="App">
-        {/* <header className="App-header">
+      {/* <header className="App-header">
           <a href="https://www.dynamsoft.com/Products/WebTWAIN_Overview.aspx" target="_blank" rel="noopener noreferrer" ><img src={DWTLogo} className="dwt-logo" alt="Dynamic Web TWAIN Logo" /></a>
           <div style={{ width: "10px" }}></div>
           <a href="https://reactjs.org/" target="_blank" rel="noopener noreferrer" ><img src={logo} className="App-logo" alt="logo" /></a>
           <div style={{ width: "770px" }}></div>
           <a href="https://www.dynamsoft.com" target="_blank" rel="noopener noreferrer" ><img src={DynamsoftLogo} className="ds-logo" alt="Dynamsoft Logo" /></a>
         </header> */}
-        <br />
-        <DWT
-          features={[
-            "scan",
-            "camera",
-            "load",
-            "save",
-            "upload",
-            "barcode",
-            "ocr",
-            "uploader"
-          ]}
-        />
-      </div>
+      <br />
+      <DWT 
+      setBack={props.setBack}
+        setUserData={props.setUserData}
+        features={[
+          "scan",
+          "camera",
+          "load",
+          "save",
+          "upload",
+          "barcode",
+          "ocr",
+          "uploader"
+        ]}
+      />
+    </div>
   )
 }
 

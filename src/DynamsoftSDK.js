@@ -251,6 +251,8 @@ export default function DWT(props) {
     <div>
       <Suspense fallback={<div>Loading...</div>}>
         <DWTUserInterface
+        setBack={props.setBack}
+        setUserData={props.setUserData}
           Dynamsoft={Dynamsoft}
           features={features}
           containerId={containerId}

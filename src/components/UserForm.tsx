@@ -46,9 +46,9 @@ const UserForm = ({ userData, setBack, back }: any) => {
   const navigate = useNavigate();
 
   const backNavigation = () => {
-    // navigate("/");
+    navigate("/");
     // setPdfFile(null);
-    setBack(!back);
+    // setBack(!back);
   };
 
   const onSubmit = (data: FormValue) => {
@@ -150,7 +150,7 @@ const UserForm = ({ userData, setBack, back }: any) => {
           <div className="input-box">
             <label htmlFor="">Taluk</label>
             <input
-              type="text"
+              type="text" 
               placeholder="Enter your taluk"
               {...register("taluk", { required: true })}
             />

@@ -209,7 +209,7 @@ export default function DWTView(props){
                         </div>
                     ))}
                 </div>
-                <div style={(props.blocks & 1 && viewReady) ? { display: "block", width: navigatorWidth, left: navigatorRight } : { display: "none" }} className="navigatePanel clearfix">
+                {/* <div style={(props.blocks & 1 && viewReady) ? { display: "block", width: navigatorWidth, left: navigatorRight } : { display: "none" }} className="navigatePanel clearfix">
                     <div className="ct-lt fullWidth tc floatL">
                         <button tabIndex="7" value="first" onClick={(event) => handleNavigation(event.target.value)}> |&lt; </button>
                     &nbsp;
@@ -230,7 +230,7 @@ export default function DWTView(props){
                             <option value="5">5X5</option>
                         </select>
                     </div>
-                </div>
+                </div> */}
             </div >
         </>
     );

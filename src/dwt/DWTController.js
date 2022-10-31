@@ -3,6 +3,7 @@ import './DWTController.css';
 import ValuePicker from './ValuePicker';
 import RangePicker from './RangePicker';
 import Api from "../helpers/interceptor/interceptor";
+// import { workerData } from 'worker_threads';
 // import fs from "fs";
 // const fs=require("fs")
 // import filepdf from "../../../../app/Downloads/final_format_sample.pdf"
@@ -105,7 +106,6 @@ export default function DWTController(props) {
                 for (let i = 0; i < vCount; i++)
                     sourceNames.push(DWObject.GetSourceNameItems(i));
                 setScanners(sourceNames)
-                console.log("sourceNames", sourceNames);
                 console.log("scanners", scanners);
                 if (sourceNames.length > 0)
                     onSourceChange(sourceNames[0]);
@@ -439,11 +439,37 @@ export default function DWTController(props) {
             setSaveFileName((new Date()).getTime().toString());
             console.log("props.buffer.current", props.buffer.current);
             imagesToUpload.push(props.buffer.current);
-            // console.log("props.buffer.current", props.buffer.current);
-            console.log("imagesToUpload", imagesToUpload);
-            console.log('GetImageURL', DWObject.GetImageURL(props.buffer.current));
-            console.log('GetImagePartURL', DWObject.GetImagePartURL(props.buffer.current));
 
+            DWObject.ConvertToBase64(
+                [props.buffer.current],
+                fileType,
+                function (result, indices, type) {
+                    let base64Str = result.getData(props.buffer.current, result.getLength(), indices)
+                    console.log(base64Str);
+                    Api("/v1/save_pdf", {
+                        method: "POST",
+                        data: {
+                            base64: base64Str
+                        },
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                        .then((data) => {
+                            props.setBack(true)
+                            props.setUserData(data.data)
+                            console.log('data from node server', data);
+                            props.setBack(false)
+                            DWObject.RemoveImage(props.buffer.count)
+                        })
+                        .catch((err) => {
+                            console.log("response err", err);
+                        });
+                },
+                function (errorCode, errorString) {
+                    console.log("---------", errorString);
+                }
+            );
 
             // const formData = new FormData();
             // formData.append("file", imagesToUpload["0"]);
@@ -461,7 +487,7 @@ export default function DWTController(props) {
             //         console.log("response err", err);
             //     });
 
-            console.log("Dynamsoft.DWT.EnumDWT_UploadDataFormat.Binary", Dynamsoft.DWT.EnumDWT_UploadDataFormat.Binary);
+            // console.log("Dynamsoft.DWT.EnumDWT_UploadDataFormat.Binary", Dynamsoft.DWT.EnumDWT_UploadDataFormat.Binary);
 
             // add logic to upload the local file;
             _type === "local" ? props.handleOutPutMessage(fileName + " saved successfully!", "important") : props.handleOutPutMessage(fileName + " uploaded successfully!", "important");
@@ -493,6 +519,7 @@ export default function DWTController(props) {
                             console.log("DWObject.SaveAllAsPDF()---", DWObject.SaveAllAsPDF(fileName, props.buffer.current, onSuccess, onFailure));
                             console.log("DWObject---", DWObject);
                             DWObject.SaveSelectedImagesAsMultiPagePDF(fileName, onSuccess, onFailure)
+                            DWObject.GenerateURLForUploadData([0, 1, 2], Dynamsoft.DWT.EnumDWT_ImageType.IT_PDF, onSuccess, onFailure)
                         }; break;
                     }
                 }
@@ -510,9 +537,31 @@ export default function DWTController(props) {
                     case "png": DWObject.SaveAsPNG(fileName, props.buffer.current, onSuccess, onFailure); break;
                     case "pdf": {
                         DWObject.SaveAsPDF(fileName, props.buffer.current, onSuccess, onFailure)
-                        console.log('GetImageURL', Dynamsoft.DWT.GetImageURL(props.buffer.current));
-                        console.log("DWObject.SaveAllAsPDF()---", DWObject.SaveAllAsPDF(fileName, props.buffer.current, onSuccess, onFailure));
-                        console.log("DWObject---", DWObject);
+                        // console.log('GetImageURL', Dynamsoft.DWT.GetImageURL(props.buffer.current));
+                        // DWObject.ConvertToBase64(
+                        //     [0, 1, 2],
+                        //     Dynamsoft.DWT.EnumDWT_ImageType.IT_PDF,
+                        //     function (result, indices, type) {
+                        //         console.log("-----------", result.getData(props.buffer.current, result.getLength(), Dynamsoft.DWT.EnumDWT_ImageType.IT_PDF));
+                        //     },
+                        //     function (errorCode, errorString) {
+                        //         console.log("----------", errorString);
+                        //     }
+                        // );
+
+                        // DWObject.ConvertToBase64(
+                        //     [0, 1, 2],
+                        //     Dynamsoft.DWT.EnumDWT_ImageType.IT_PDF,
+                        //     function (result, indices, type) {
+                        //         console.log("---------", result.getData(props.buffer.current, result.getLength()));
+                        //     },
+                        //     function (errorCode, errorString) {
+                        //         console.log("---------", errorString);
+                        //     }
+                        // );
+                        // console.log("DWObject.SaveAllAsPDF()---", DWObject.SaveAllAsPDF(fileName, props.buffer.current, onSuccess, onFailure));
+
+                        // console.log("DWObject---", DWObject);
                     }; break;
                 }
                 // imagesToUpload.push(props.buffer.current);
@@ -529,9 +578,53 @@ export default function DWTController(props) {
             if (o.toLowerCase().indexOf(saveFileFormat) !== -1 && Dynamsoft.DWT.EnumDWT_ImageType[o] < 7) {
                 fileType = Dynamsoft.DWT.EnumDWT_ImageType[o];
                 console.log("fileType ----", fileType);
+                DWObject.ConvertToBase64(
+                    // [0, 1, 2],
+                    props.buffer.current,
+
+                    fileType,
+                    function (result, indices, type) {
+                        console.log("---------", result.getData(0, result.getLength(), indices));
+                    },
+                    function (errorCode, errorString) {
+                        console.log("---------", errorString);
+                    }
+                );
+                DWObject.ConvertToBase64(
+                    [0, 1, 2],
+                    Dynamsoft.DWT.EnumDWT_ImageType.IT_PDF,
+                    function (result, indices, type) {
+                        console.log(result.getData(props.buffer.current, result.getLength(), Dynamsoft.DWT.EnumDWT_ImageType.IT_PDF));
+                    },
+                    function (errorCode, errorString) {
+                        console.log(errorString);
+                    }
+                );
                 break;
             }
         }
+
+
+        // DWObject.ConvertToBase64(
+        //     [0, 1, 2],
+        //     Dynamsoft.DWT.EnumDWT_ImageType.IT_PDF,
+        //     function (result, indices, type) {
+        //         console.log("---------", result.getData(0, result.getLength()));
+        //     },
+        //     function (errorCode, errorString) {
+        //         console.log("---------", errorString);
+        //     }
+        // );
+        // DWObject.ConvertToBase64(
+        //     [0, 1, 2],
+        //     Dynamsoft.DWT.EnumDWT_ImageType.IT_PDF,
+        //     function (result, indices, type) {
+        //         console.log(result.getData(props.buffer.current, result.getLength(), Dynamsoft.DWT.EnumDWT_ImageType.IT_PDF));
+        //     },
+        //     function (errorCode, errorString) {
+        //         console.log(errorString);
+        //     }
+        // );
 
 
         //--------------------------------------------------------------------------------//
