@@ -1,10 +1,10 @@
 //The URL will be change. It's depends on server side
 
 const devEnv = {
-  baseURL: "http://192.168.1.97:3001",
+  baseURL: "https://ocr-project-poc.herokuapp.com",
 };
 const prodEnv = {
-  baseURL: "http://192.168.1.97:3001",
+  baseURL: "https://ocr-project-poc.herokuapp.com",
 };
 
 const environment =
