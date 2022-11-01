@@ -111,7 +111,6 @@ const Table = () => {
             <select
               className="w-20 py-2"
               name=""
-              // onChange={(e) => setPerPage(e.target.value)}
               onChange={(e) => dispatch(perPage(e.target.value))}
               value={perPageState}
             >
