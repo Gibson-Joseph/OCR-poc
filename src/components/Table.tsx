@@ -42,7 +42,7 @@ const Table = () => {
 
   const fetchData = async () => {
     await Api(
-      `/v1/customers_list?page=${paginationState}&per_page=${perPage}`,
+      `/v1/customers_list?page=${1}&per_page=${perPage}`,
       {
         method: "GET",
       }
