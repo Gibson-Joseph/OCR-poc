@@ -1,6 +1,5 @@
 import React, { Suspense, useEffect, useState, useRef } from 'react';
 import './DWTUserInterface.css';
-import DWTOutPut from './DWTOutPut';
 import DWTView from './DWTView';
 const DWTController = React.lazy(() => import('./DWTController'));
 
@@ -143,13 +142,6 @@ export default function DWTUserInterface(props) {
     const handleNavigating = (bAllow) => {
         setBNoNavigating(!bAllow)
     }
-    const handleEvent = (evt) => {
-        switch (evt) {
-            default: break;
-            case "doubleClick": handleOutPutMessage("", "", true); break;
-            case "delete": handleOutPutMessage("", "", true); break;
-        }
-    }
     return (
         <div id="DWTcontainer" className="container">
             <div style={{ textAlign: "left", position: "relative", float: "left", width: "980px" }} className="fullWidth clearfix">
@@ -188,22 +180,6 @@ export default function DWTUserInterface(props) {
                     />
                 </Suspense>
             </div>
-            {/* <div style={{ textAlign: "left", position: "relative", float: "left", width: "980px" }} className="fullWidth clearfix">
-                    <DWTOutPut
-                        note={"(Double click or hit 'delete' to clear!)"}
-                        handleEvent={(evt) => handleEvent(evt)}
-                        messages={messages}
-                        bNoScroll={bNoScroll}
-                    />
-                    <div className="DWT_Notice">
-                        <p><strong>Platform &amp;Browser Support:</strong></p>Chrome|Firefox|Edge on Windows
-                            <p><strong>OCR:</strong> </p> Only English with OCR Basic is demonstrated.<br />
-                            Click &nbsp;
-                            <u><a href='https://www.dynamsoft.com/Products/ocr-basic-languages.aspx'>here</a></u>
-                            &nbsp;for other supported languages and&nbsp;
-                            <u><a href='https://www.dynamsoft.com/Products/cpp-ocr-library.aspx'>here</a></u> for the differences betwen two available OCR engines.
-                    </div>
-                </div> */}
         </div >
     )
 }

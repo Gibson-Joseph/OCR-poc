@@ -5,6 +5,7 @@ const devEnv = {
 };
 const prodEnv = {
   baseURL: "https://ocr-project-poc.herokuapp.com",
+
 };
 
 const environment =

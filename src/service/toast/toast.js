@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const toastMsg = (status, name = "name") => {
+const toastMsg = (status, name) => {
   if (status === "success") {
     toast.success(`${name} Successfully data Stored`, {
       position: "top-right",

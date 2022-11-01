@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate,useLocation } from "react-router-dom";
 
@@ -22,28 +21,8 @@ type FormValue = {
 };
 
 const UserForm = ({ userData, setBack, back }: any) => {
-  console.log("form State----", userData);
 const location=useLocation()
 console.log("location.state",location.state);
-
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<FormValue>({
-  //   defaultValues: {
-  //     name: userData?.data?.row.Name,
-  //     door_no: userData?.data?.row.Door_No,
-  //     address: userData?.data?.row.Address,
-  //     city: userData?.data?.row.City,
-  //     pin_code: userData?.data?.row.Pincode,
-  //     taluk: userData?.data?.row.Taluk,
-  //     district: userData?.data?.row.District,
-  //     mobile: userData?.data?.row.Mobile,
-  //     landline: userData?.data?.row.Landline,
-  //     email: userData?.data?.row["e-mail"],
-  //   },
-  // });
 
   const {
     register,
@@ -68,7 +47,6 @@ console.log("location.state",location.state);
 
   const backNavigation = () => {
     navigate("/");
-
   };
 
   const onSubmit = (data: FormValue) => {
@@ -83,7 +61,7 @@ console.log("location.state",location.state);
         navigate("/");
       })
       .catch((err) => {
-        toastMsg("error");
+        toastMsg("error","");
         console.log(err);
       });
   };
