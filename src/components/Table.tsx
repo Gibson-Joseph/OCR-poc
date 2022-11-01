@@ -15,7 +15,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 import Api from "../helpers/interceptor/interceptor";
-import { tablePage } from "../redux/actions/Form.action";
+import { tablePage, perPage } from "../redux/actions/Form.action";
 
 const Table = () => {
   const columnDef = [
@@ -32,17 +32,20 @@ const Table = () => {
   ];
 
   const dispatch = useDispatch();
-  const paginationState = useSelector(
+  const activePageState = useSelector(
     (state: any) => state.pagination.activePage
   );
+  const perPageState = useSelector((state: any) => state.pagination.perPage)
+
+  console.log("activePageState", activePageState);
+  console.log("perPageState", perPageState);
 
   const [rowData, setRowData] = useState<any>();
   const [page, setPage] = useState<any>();
-  const [perPage, setPerPage] = useState<any>(10);
 
   const fetchData = async () => {
     await Api(
-      `/v1/customers_list?page=${1}&per_page=${perPage}`,
+      `/v1/customers_list?page=${activePageState}&per_page=${perPageState}`,
       {
         method: "GET",
       }
@@ -85,7 +88,7 @@ const Table = () => {
 
   useEffect(() => {
     fetchData();
-  }, [paginationState, perPage]);
+  }, [activePageState, perPageState]);
 
   return (
     <div className="w-full h-full ag-theme-alpine">
@@ -108,8 +111,9 @@ const Table = () => {
             <select
               className="w-20 py-2"
               name=""
-              onChange={(e) => setPerPage(e.target.value)}
-              value={perPage}
+              // onChange={(e) => setPerPage(e.target.value)}
+              onChange={(e) => dispatch(perPage(e.target.value))}
+              value={perPageState}
             >
               <option value={5}>5</option>
               <option value={10}>10</option>
@@ -118,11 +122,11 @@ const Table = () => {
           </div>
 
           <div className="sm:mx-12 my-2">
-            <b>{page?.start_at}</b>
+            <b>{page?.start_at ? page?.start_at : "1"}</b>
             <span className="px-1">to</span>
             <b>{page?.end_at}</b>
             <span className="px-1">of</span>
-            <b>{page?.total_count}</b>
+            <b>{page?.total_count ? page?.total_count : "1"}</b>
           </div>
 
           <div className="flex">
@@ -142,9 +146,9 @@ const Table = () => {
             </span>
             <span className="mx-3">
               <span className="p-1">Page</span>
-              <b>{page?.current_page}</b>
+              <b>{page?.current_page ? page?.current_page : "1"}</b>
               <span className="p-1">of</span>
-              <b className="">{page?.total_pages}</b>
+              <b className="">{page?.total_pages ? page?.total_pages : "1"}</b>
             </span>
             <span>
               <button
