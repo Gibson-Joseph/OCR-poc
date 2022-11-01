@@ -5,7 +5,7 @@ import loadinSpinner from "../assets/refresh.svg";
 import toastMsg from '../service/toast/toast';
 import { ToastContainer } from "react-toastify"
 
-import {  useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 // import buffer from "buffer"
 // import { workerData } from 'worker_threads';
 // import fs from "fs";
@@ -32,7 +32,6 @@ let initialShownTabs = 127;
 let fileUploaderReady = false;
 let Dynamsoft = null;
 let DWObject = null;
-//  let dbrObject = null;
 let fileUploaderManager = null;
 console.log("DWObject", DWObject);
 export default function DWTController(props) {
@@ -61,7 +60,6 @@ export default function DWTController(props) {
         isVideoOn: false
     });
 
-    // const [saveFileName, setSaveFileName] = useState((new Date()).getTime().toString());
 
     const [saveFileFormat] = useState("pdf");
     const [loadding, setLoading] = useState(false)
@@ -182,7 +180,6 @@ export default function DWTController(props) {
         );
     }
 
-    //////////////////////////////////
 
     const saveOrUploadImage = (_type) => {
         props.setLoading(true)
@@ -211,8 +208,8 @@ export default function DWTController(props) {
                     })
                     .catch((err) => {
                         console.log("response err", err);
-                        navigate("/form")
                         toastMsg("error", "Could not upload file please enter manualy");
+                        navigate("/form")
 
                     });
             },

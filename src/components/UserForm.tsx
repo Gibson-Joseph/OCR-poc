@@ -61,7 +61,7 @@ console.log("location.state",location.state);
         navigate("/");
       })
       .catch((err) => {
-        toastMsg("error","");
+        toastMsg("error");
         console.log(err);
       });
   };

@@ -31,8 +31,6 @@ const PdfUpload = ({ setPdfFile, pdfFileErr,setPath }: any) => {
         <input
           required
           onChange={(e: any) => {
-            setPath(URL.createObjectURL(e.target.files["0"]))
-            // console.log("path", path);
             setPdfFile(e.target.files)
           }}
           type="file"
