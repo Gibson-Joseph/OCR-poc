@@ -3,6 +3,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 const toastMsg = (status:string, name?:string) => {
   if (status === "success") {
+    console.log("success------");
+    
     toast.success(`${name} Successfully data Stored`, {
       position: "top-right",
       autoClose: 5000,
@@ -17,6 +19,8 @@ const toastMsg = (status:string, name?:string) => {
   }
 
   if (status === "error") {
+    console.log("error");
+    
     toast.error(`Error ${name}`, {
       position: "top-right",
       autoClose: 5000,

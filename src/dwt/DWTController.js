@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './DWTController.css';
 import Api from "../helpers/interceptor/interceptor";
-import loadinSpinner from "../assets/refresh.svg";
-import toastMsg from '../service/toast/toast';
+import loadingSpinner from "../assets/refresh.svg";
+import toastMsg from '../service/toastMsg/toast';
 import { ToastContainer } from "react-toastify"
 
 import { useNavigate } from "react-router-dom"
@@ -62,7 +62,6 @@ export default function DWTController(props) {
 
 
     const [saveFileFormat] = useState("pdf");
-    const [loadding, setLoading] = useState(false)
 
     useEffect(() => {
         DWObject = props.dwt;
@@ -151,7 +150,6 @@ export default function DWTController(props) {
         })
     }
     const acquireImage = () => {
-        console.log("call acquireImage");
         DWObject.CloseSource();
         for (let i = 0; i < DWObject.SourceCount; i++) {
             if (DWObject.GetSourceNameItems(i) === deviceSetup.currentScanner) {
@@ -159,6 +157,14 @@ export default function DWTController(props) {
                 break;
             }
         }
+        // Dynamsoft.DWT.OnWebTwainPreExecute = function() {
+        //     // Show your own progress indicator
+        //     console.log('Progress Indicator operation starts!');
+        // };
+        // Dynamsoft.DWT.OnWebTwainPostExecute = function() {
+        //     // Hide the progress indicator
+        //     console.log('Progress Indicator operation ends!');
+        // };
         DWObject.OpenSource();
         DWObject.AcquireImage(
             {
@@ -175,14 +181,25 @@ export default function DWTController(props) {
                  * NOTE: No errors are being logged!!
                  */
             },
-            () => props.handleOutPutMessage("Acquire success!", "important"),
-            () => props.handleOutPutMessage("Acquire failure!", "error")
+            // () => props.handleOutPutMessage("Acquire success!", "important"),
+            // () => props.handleOutPutMessage("Acquire failure!", "error")
         );
     }
 
 
     const saveOrUploadImage = (_type) => {
+        // Dynamsoft.DWT.OnWebTwainPreExecute = function () {
+        //     // Show your own progress indicator
+        //     console.log('Progress Indicator operation starts!');
+        //     return <img
+        //         className="animate-spin h-12"
+        //         src={loadingSpinner}
+        //         alt="loading ..."
+        //     />
+        // };
+
         props.setLoading(true)
+        //  <----- add loader value in props
         let fileType = 0;
 
         DWObject.ConvertToBase64(
@@ -203,6 +220,7 @@ export default function DWTController(props) {
                     .then((data) => {
                         console.log('data from node server', data);
                         props.setBack(false)
+                        // toastMsg("success", "");
                         navigate("/form", { state: data.data })
                         DWObject.RemoveImage(props.buffer.count)
                     })
@@ -210,7 +228,6 @@ export default function DWTController(props) {
                         console.log("response err", err);
                         toastMsg("error", "Could not upload file please enter manualy");
                         navigate("/form")
-
                     });
             },
             function (errorCode, errorString) {
@@ -218,14 +235,12 @@ export default function DWTController(props) {
             }
         );
 
-
         if (_type !== "local" && _type !== "server") return;
 
         for (let o in Dynamsoft.DWT.EnumDWT_ImageType) {
             console.log("Dynamsoft.DWT.EnumDWT_ImageType", Dynamsoft.DWT.EnumDWT_ImageType);
             if (o.toLowerCase().indexOf(saveFileFormat) !== -1 && Dynamsoft.DWT.EnumDWT_ImageType[o] < 7) {
                 fileType = Dynamsoft.DWT.EnumDWT_ImageType[o];
-
                 break;
             }
         }
@@ -233,23 +248,12 @@ export default function DWTController(props) {
 
     return (
         <div>
-            {loadding && <div className="w-full h-full flex justify-center items-center">
-                <img
-                    className="animate-spin h-12"
-                    src={loadinSpinner}
-                    alt="loading ..."
-                />
-            </div>}
-            <ToastContainer />
-
             <div className="DWTController">
-
-                {!loadding && <div className="divinput">
+                <div className="divinput">
                     <ul className="PCollapse">
                         {props.features & 0b1 ? (
                             <li>
                                 <div className="divType" tabIndex="1" controlindex="1">
-
                                     <div className={shownTabs & 1 ? "mark_arrow expanded" : "mark_arrow collapsed"} ></div>
                                     Scan</div>
                                 <div className="divTableStyle" style={shownTabs & 1 ? { display: "block" } : { display: "none" }}>
@@ -268,7 +272,6 @@ export default function DWTController(props) {
                                         </li>
                                         <li>
                                             <ul>
-
                                                 <li>
                                                     <select tabIndex="1" style={{ width: "48%", marginRight: "4%" }}
                                                         value={deviceSetup.nPixelType}
@@ -299,7 +302,7 @@ export default function DWTController(props) {
                             </li>
                         ) : ""}
                     </ul>
-                </div>}
+                </div>
             </div >
         </div>
     );

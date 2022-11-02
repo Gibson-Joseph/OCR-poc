@@ -1,3 +1,4 @@
+import React, { useRef, useCallback } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -16,6 +17,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 import Api from "../helpers/interceptor/interceptor";
 import { tablePage, perPage } from "../redux/actions/Form.action";
+import toastMsg from "../service/toastMsg/toast";
 
 const Table = () => {
   const columnDef = [
@@ -42,6 +44,14 @@ const Table = () => {
 
   const [rowData, setRowData] = useState<any>();
   const [page, setPage] = useState<any>();
+  const [loading, setLoading] = useState(false)
+
+  const gridRef = useRef<AgGridReact>(null);
+
+  // useCallback(() => {
+  //   gridRef.current!.api.showLoadingOverlay();
+  //   console.log("onBtShowLoading", gridRef.current?.api);
+  // }, [activePageState,perPageState]);
 
   const fetchData = async () => {
     await Api(
@@ -53,8 +63,12 @@ const Table = () => {
       .then((res) => {
         setRowData(res.data.customers);
         setPage(res.data.pagination);
+        setLoading(false)
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        toastMsg("error", "")
+        console.log(err)
+      });
   };
 
   const clickIncCountPage = () => {
@@ -93,14 +107,16 @@ const Table = () => {
   return (
     <div className="w-full h-full ag-theme-alpine">
       {/* Toast Component */}
-      <ToastContainer />
 
       {/* Ag-Grid-COmponent */}
       <AgGridReact
+        ref={gridRef}
         columnDefs={columnDef}
         rowData={rowData}
         defaultColDef={defaultColDef}
         animateRows={true}
+        overlayLoadingTemplate={"<span>Please wait while your rows are loading...</span>"}
+        overlayNoRowsTemplate={'<span>No data found to display.</span>'}
       />
 
       {/* pagination */}

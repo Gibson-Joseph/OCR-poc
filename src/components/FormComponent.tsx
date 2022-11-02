@@ -9,7 +9,6 @@ const FormComponent = () => {
 
   return (
     <div className="h-screen">
-      <ToastContainer />
       <header className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 h-12 flex">
         <h1 className="text-white font-bold text-2xl italic w-full block text-center">
           Add Your Detail
