@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate,useLocation } from "react-router-dom";
 
 import Api from "../helpers/interceptor/interceptor";
-import toastMsg from "../service/toast/toast";
+// import toastMsg from "../service/toast/toast";
+import toastMsg from "../service/toastMsg/toast"
 import { ToastContainer } from "react-toastify";
 
 import "../style/style.css";
@@ -68,7 +69,6 @@ console.log("location.state",location.state);
 
   return (
     <div className="w-full flex justify-center items-center">
-      <ToastContainer />
       <form
         action=""
         className="w-[95%] sm:h-[65%] sm:p-5 md:w-[75%] lg:w-[70%] py-4 rounded-lg md:border md:shadow-2xl"

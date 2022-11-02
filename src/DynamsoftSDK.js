@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import Dynamsoft from "dwt";
-import loadinSpinner from "./assets/refresh.svg"
+import loadingSpinner from "./assets/refresh.svg"
 const DWTUserInterface = React.lazy(() => import("./dwt/DWTUserInterface"));
 
 let featureSet = {
@@ -254,31 +254,33 @@ export default function DWT(props) {
       {loading && <div className="w-full h-full flex justify-center items-center">
         <img
           className="animate-spin h-12"
-          src={loadinSpinner}
+          src={loadingSpinner}
           alt="loading ..."
         />
       </div>}
       <Suspense fallback={<div>Loading...</div>}>
-        {!loading && <DWTUserInterface
-          setLoading={setLoading}
-          setBack={props.setBack}
-          setUserData={props.setUserData}
-          Dynamsoft={Dynamsoft}
-          features={features}
-          containerId={containerId}
-          startTime={startTime}
-          dwt={dwt}
-          status={status}
-          buffer={buffer}
-          selected={selected}
-          zones={zones}
-          runtimeInfo={runtimeInfo}
-          handleViewerSizeChange={(viewSize) =>
-            handleViewerSizeChange(viewSize)
-          }
-          handleStatusChange={(value) => handleStatusChange(value)}
-          handleBufferChange={() => handleBufferChange()}
-        />}
+        {!loading &&
+          <DWTUserInterface
+            setLoading={setLoading}
+            setBack={props.setBack}
+            setUserData={props.setUserData}
+            Dynamsoft={Dynamsoft}
+            features={features}
+            containerId={containerId}
+            startTime={startTime}
+            dwt={dwt}
+            status={status}
+            buffer={buffer}
+            selected={selected}
+            zones={zones}
+            runtimeInfo={runtimeInfo}
+            handleViewerSizeChange={(viewSize) =>
+              handleViewerSizeChange(viewSize)
+            }
+            handleStatusChange={(value) => handleStatusChange(value)}
+            handleBufferChange={() => handleBufferChange()}
+          />
+        }
       </Suspense>
     </div>
   );

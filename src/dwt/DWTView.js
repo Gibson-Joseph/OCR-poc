@@ -34,21 +34,21 @@ export default function DWTView(props) {
         }
     }
     const [viewReady, setViewReady] = useState(false);
-    const [previewMode, setPreviewMode] = useState("1")
-    const prevViewReady = usePrevious(viewReady)
+    // const [previewMode, setPreviewMode] = useState("1")
+    // const prevViewReady = usePrevious(viewReady)
 
     useEffect(() => {
         DWObject = props.dwt
         setViewReady({ viewReady: true })
     }, [props.dwt])
     useEffect(() => {
-        if (DWObject !== null && viewReady && !prevViewReady) {
-            DWObject.Viewer.width = width;
-            DWObject.Viewer.height = height;
-        }
-        if (props.barcodeRects.length !== 0) {
-            !props.bNoNavigating && handlePreviewModeChange("1");
-        }
+        // if (DWObject !== null && viewReady && !prevViewReady) {
+        //     DWObject.Viewer.width = width;
+        //     DWObject.Viewer.height = height;
+        // }
+        // if (props.barcodeRects.length !== 0) {
+        //     !props.bNoNavigating && handlePreviewModeChange("1");
+        // }
         if (document.getElementById(props.containerId).offsetWidth !== 0) {
             props.handleViewerSizeChange({
                 width: document.getElementById(props.containerId).offsetWidth,
@@ -62,45 +62,45 @@ export default function DWTView(props) {
     }, [props.runtimeInfo.ImageWidth])
 
 
-    const handleNavigation = (action) => {
-        switch (action) {
-            default://viewModeChange, removeAll
-                break;
-            case "first":
-                DWObject.CurrentImageIndexInBuffer = 0; break;
-            case "last":
-                DWObject.CurrentImageIndexInBuffer = props.buffer.count - 1; break;
-            case "previous":
-                DWObject.CurrentImageIndexInBuffer = (props.buffer.current > 0) && (props.buffer.current - 1); break;
-            case "next":
-                DWObject.CurrentImageIndexInBuffer = (props.buffer.current < props.buffer.count - 1) && (props.buffer.current + 1); break;
-        }
-        props.handleBufferChange();
-    }
-    const handlePreviewModeChange = (event) => {
-        let _newMode = "";
-        if (event && event.target) {
-            _newMode = event.target.value
-        }
-        else {
-            if (parseInt(event) > 0 && (parseInt(event) < 6)) _newMode = parseInt(event).toString();
-        }
-        if (_newMode !== previewMode) {
-            if (props.bNoNavigating) {
-                console.log(props.barcodeRects.length);
-                props.handleOutPutMessage("Navigation not allowed!", "error");
-                return;
-            }
-            if (previewMode === "1" && props.barcodeRects.length > 0) {
-                props.handleOutPutMessage("Can't change view mode when barcode rects are on display!", "error");
-                return;
-            }
-            setPreviewMode(_newMode)
-            DWObject.Viewer.setViewMode(parseInt(_newMode), parseInt(_newMode));
-            DWObject.MouseShape = (parseInt(_newMode) > 1);
-            handleNavigation("viewModeChange");
-        }
-    }
+    // const handleNavigation = (action) => {
+    //     switch (action) {
+    //         default://viewModeChange, removeAll
+    //             break;
+    //         case "first":
+    //             DWObject.CurrentImageIndexInBuffer = 0; break;
+    //         case "last":
+    //             DWObject.CurrentImageIndexInBuffer = props.buffer.count - 1; break;
+    //         case "previous":
+    //             DWObject.CurrentImageIndexInBuffer = (props.buffer.current > 0) && (props.buffer.current - 1); break;
+    //         case "next":
+    //             DWObject.CurrentImageIndexInBuffer = (props.buffer.current < props.buffer.count - 1) && (props.buffer.current + 1); break;
+    //     }
+    //     props.handleBufferChange();
+    // }
+    // const handlePreviewModeChange = (event) => {
+    //     let _newMode = "";
+    //     if (event && event.target) {
+    //         _newMode = event.target.value
+    //     }
+    //     else {
+    //         if (parseInt(event) > 0 && (parseInt(event) < 6)) _newMode = parseInt(event).toString();
+    //     }
+    //     if (_newMode !== previewMode) {
+    //         if (props.bNoNavigating) {
+    //             console.log(props.barcodeRects.length);
+    //             // props.handleOutPutMessage("Navigation not allowed!", "error");
+    //             return;
+    //         }
+    //         if (previewMode === "1" && props.barcodeRects.length > 0) {
+    //             // props.handleOutPutMessage("Can't change view mode when barcode rects are on display!", "error");
+    //             return;
+    //         }
+    //         setPreviewMode(_newMode)
+    //         DWObject.Viewer.setViewMode(parseInt(_newMode), parseInt(_newMode));
+    //         DWObject.MouseShape = (parseInt(_newMode) > 1);
+    //         handleNavigation("viewModeChange");
+    //     }
+    // }
     return (
         <>
             <div style={{ display: viewReady ? "none" : "block" }} className="DWTcontainerTop"></div>
@@ -119,12 +119,12 @@ export default function DWTView(props) {
     );
 }
 
-function usePrevious(value) {
-    const ref = useRef();
+// function usePrevious(value) {
+//     const ref = useRef();
 
-    useEffect(() => {
-        ref.current = value;
-    }, [value]);
+//     useEffect(() => {
+//         ref.current = value;
+//     }, [value]);
 
-    return ref.current;
-}
+//     return ref.current;
+// }
