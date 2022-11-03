@@ -48,11 +48,6 @@ const Table = () => {
 
   const gridRef = useRef<AgGridReact>(null);
 
-  // useCallback(() => {
-  //   gridRef.current!.api.showLoadingOverlay();
-  //   console.log("onBtShowLoading", gridRef.current?.api);
-  // }, [activePageState,perPageState]);
-
   const fetchData = async () => {
     await Api(
       `/v1/customers_list?page=${activePageState}&per_page=${perPageState}`,
@@ -66,7 +61,7 @@ const Table = () => {
         setLoading(false)
       })
       .catch((err) => {
-        toastMsg("error", "")
+        toastMsg("error", ", could not fetch data")
         console.log(err)
       });
   };
@@ -97,7 +92,8 @@ const Table = () => {
   );
 
   const clickNav = () => {
-    navigate("/scanner");
+    navigate("/scanner", { state: true });
+    window.location.reload()
   };
 
   useEffect(() => {

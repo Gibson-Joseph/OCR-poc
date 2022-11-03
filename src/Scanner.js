@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "./scanner.css"
 import DWT from './DynamsoftSDK';
 
 function Scanner(props) {
+
+
+
   return (
     <div className="App">
       <DWT

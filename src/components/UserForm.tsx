@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate,useLocation } from "react-router-dom";
 
 import Api from "../helpers/interceptor/interceptor";
-// import toastMsg from "../service/toast/toast";
 import toastMsg from "../service/toastMsg/toast"
 import { ToastContainer } from "react-toastify";
 
@@ -62,8 +61,9 @@ console.log("location.state",location.state);
         navigate("/");
       })
       .catch((err) => {
-        toastMsg("error");
+        toastMsg("ReUpload");
         console.log(err);
+        navigate("/");
       });
   };
 

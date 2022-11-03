@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import Dynamsoft from "dwt";
 import loadingSpinner from "./assets/refresh.svg"
+import dwtLoader from "./assets/loading-30 1.svg"
 const DWTUserInterface = React.lazy(() => import("./dwt/DWTUserInterface"));
 
 let featureSet = {
@@ -247,14 +248,15 @@ export default function DWT(props) {
     height = viewSize.height;
   };
 
+
   return unSupportedEnv ? (
     <div>Please use Chrome, Firefox or Edge on Windows!</div>
   ) : (
     <div className="w-full h-screen">
       {loading && <div className="w-full h-full flex justify-center items-center">
         <img
-          className="animate-spin h-12"
-          src={loadingSpinner}
+          className="animate-spin h-28"
+          src={dwtLoader}
           alt="loading ..."
         />
       </div>}
