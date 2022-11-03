@@ -42,12 +42,6 @@ export default function DWTUserInterface(props) {
         return text;
     }
 
-    const [messages, setMessages] = useState([{
-        time: (new Date()).getTime(),
-        text: statusChangeText(props.status),
-        type: "info"
-    }]);
-    // const [bNoScroll, setBNoScroll] = useState(false);
     const [bNoNavigating, setBNoNavigating] = useState(false);
     const [barcodeRects, setBarcodeRects] = useState([]);
     const prevProps = usePrevious(props);
@@ -62,83 +56,13 @@ export default function DWTUserInterface(props) {
         if (prevProps.status !== props.status) {
             let _statusChange = props.status - prevProps.status;
             let _text = statusChangeText(props.status, _statusChange);
-        //     if (_text.indexOf("_ALLDONE_") !== -1) {
-        //         handleOutPutMessage(_text.substr(9));
-        //         handleOutPutMessage("All ready... <initialization took " + ((new Date()).getTime() - props.startTime) + " milliseconds>", "important");
-        //     } else
-        //         handleOutPutMessage(_text);
         }
         if ((prevProps.buffer.current !== props.buffer.current) || props.buffer.updated) {
-            // barcodeRects.length > 0 && handleBarcodeResults("clear");
             props.buffer.updated && props.handleBufferChange();
         }
     })
 
-    // const handleBarcodeResults = (results) => {
-    //     if (results === "clear")
-    //         setBarcodeRects([]);
-    //     else {
-    //         let _oldBR = [...barcodeRects];
-    //         if (results.length > 0) {
-    //             let zoom;
-    //             if (props.runtimeInfo.showAbleWidth >= props.runtimeInfo.ImageWidth && props.runtimeInfo.showAbleHeight >= props.runtimeInfo.ImageHeight) {
-    //                 zoom = 1;
-    //             } else if (props.runtimeInfo.showAbleWidth / props.runtimeInfo.showAbleHeight >= props.runtimeInfo.ImageWidth / props.runtimeInfo.ImageHeight) {
-    //                 zoom = props.runtimeInfo.showAbleHeight / props.runtimeInfo.ImageHeight;
-    //             } else {
-    //                 zoom = props.runtimeInfo.showAbleWidth / props.runtimeInfo.ImageWidth;
-    //             }
-    //             for (let i = 0; i < results.length; ++i) {
-    //                 let result = results[i];
-    //                 let loc = result.localizationResult;
-    //                 let left = Math.min(loc.x1, loc.x2, loc.x3, loc.x4);
-    //                 let top = Math.min(loc.y1, loc.y2, loc.y3, loc.y4);
-    //                 let right = Math.max(loc.x1, loc.x2, loc.x3, loc.x4);
-    //                 let bottom = Math.max(loc.y1, loc.y2, loc.y3, loc.y4);
-    //                 let leftBase = 1 + props.runtimeInfo.showAbleWidth / 2 - props.runtimeInfo.ImageWidth / 2 * zoom;
-    //                 let topBase = 1 + props.runtimeInfo.showAbleHeight / 2 - props.runtimeInfo.ImageHeight / 2 * zoom;
-    //                 let width = (right - left) * zoom;
-    //                 let height = (bottom - top) * zoom;
-    //                 left = leftBase + left * zoom;
-    //                 top = topBase + top * zoom;
-    //                 _oldBR.push({ x: left, y: top, w: width, h: height });
-    //             }
-    //             setBarcodeRects(_oldBR)
-    //         }
-    //     }
-    // }
-    // const handleOutPutMessage = (message, type, bReset, bNoScroll) => {
-    //     console.log("message---", message);
-    //     let _noScroll = false, _type = "info";
-    //     if (type)
-    //         _type = type;
-    //     if (_type === "httpResponse") {
-    //         let msgWindow = window.open("", "Response from server", "height=500,width=750,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no");
-    //         msgWindow.document.writeln(message);
-    //     } else {
-    //         if (bNoScroll)
-    //             _noScroll = true;
-    //         if (bReset) {
-    //             setMessages([{
-    //                 time: (new Date()).getTime(),
-    //                 text: statusChangeText(props.status),
-    //                 type: "info"
-    //             }]);
-    //             setBNoScroll(false);
-    //         } else {
-    //             setMessages(messages => {
-    //                 let newMessages = [...messages];
-    //                 newMessages.push({ time: (new Date()).getTime(), text: message, type: _type });
-    //                 console.log("message---", messages);
-    //                 return newMessages;
-    //             });
-    //             setBNoScroll(_noScroll);
-    //         }
-    //     }
-    // }
-    // const handleException = (ex) => {
-    //     handleOutPutMessage(ex.message, "error");
-    // }
+
     const handleNavigating = (bAllow) => {
         setBNoNavigating(!bAllow)
     }
@@ -156,7 +80,6 @@ export default function DWTUserInterface(props) {
                     barcodeRects={barcodeRects}
                     handleViewerSizeChange={(viewSize) => props.handleViewerSizeChange(viewSize)}
                     handleBufferChange={() => props.handleBufferChange()}
-                    // handleOutPutMessage={(message, type, bReset, bNoScroll) => handleOutPutMessage(message, type, bReset, bNoScroll)}
                 />
                 <Suspense>
                     <DWTController
@@ -173,10 +96,7 @@ export default function DWTUserInterface(props) {
                         runtimeInfo={props.runtimeInfo}
                         barcodeRects={barcodeRects}
                         handleStatusChange={(value) => props.handleStatusChange(value)}
-                        // handleBarcodeResults={(results) => handleBarcodeResults(results)}
                         handleNavigating={(bAllow) => handleNavigating(bAllow)}
-                        // handleException={(ex) => handleException(ex)}
-                        // handleOutPutMessage={(message, type, bReset, bNoScroll) => handleOutPutMessage(message, type, bReset, bNoScroll)}
                     />
                 </Suspense>
             </div>

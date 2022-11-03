@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { ToastContainer } from "react-toastify";
 import Scanner from "../Scanner";
+import { useLocation } from "react-router-dom"
 
 const FormComponent = () => {
+  const location = useLocation()
   const [userData, setUserData] = useState<any>();
   const [back, setBack] = useState<boolean>(false);
-
 
   return (
     <div className="h-screen">

@@ -156,15 +156,8 @@ export default function DWTController(props) {
                 DWObject.SelectSourceByIndex(i);
                 break;
             }
+
         }
-        // Dynamsoft.DWT.OnWebTwainPreExecute = function() {
-        //     // Show your own progress indicator
-        //     console.log('Progress Indicator operation starts!');
-        // };
-        // Dynamsoft.DWT.OnWebTwainPostExecute = function() {
-        //     // Hide the progress indicator
-        //     console.log('Progress Indicator operation ends!');
-        // };
         DWObject.OpenSource();
         DWObject.AcquireImage(
             {
@@ -177,29 +170,13 @@ export default function DWTController(props) {
                 IfGetImageInfo: true,
                 IfGetExtImageInfo: true,
                 extendedImageInfoQueryLevel: 0
-                /**
-                 * NOTE: No errors are being logged!!
-                 */
             },
-            // () => props.handleOutPutMessage("Acquire success!", "important"),
-            // () => props.handleOutPutMessage("Acquire failure!", "error")
         );
     }
 
 
     const saveOrUploadImage = (_type) => {
-        // Dynamsoft.DWT.OnWebTwainPreExecute = function () {
-        //     // Show your own progress indicator
-        //     console.log('Progress Indicator operation starts!');
-        //     return <img
-        //         className="animate-spin h-12"
-        //         src={loadingSpinner}
-        //         alt="loading ..."
-        //     />
-        // };
-
         props.setLoading(true)
-        //  <----- add loader value in props
         let fileType = 0;
 
         DWObject.ConvertToBase64(
@@ -220,7 +197,6 @@ export default function DWTController(props) {
                     .then((data) => {
                         console.log('data from node server', data);
                         props.setBack(false)
-                        // toastMsg("success", "");
                         navigate("/form", { state: data.data })
                         DWObject.RemoveImage(props.buffer.count)
                     })
