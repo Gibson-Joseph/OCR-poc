@@ -202,7 +202,7 @@ export default function DWTController(props) {
                     })
                     .catch((err) => {
                         console.log("response err", err);
-                        toastMsg("error", "Could not upload file please enter manualy");
+                        toastMsg("error", "OCR conversion failed, Kindly update the form manually");
                         navigate("/form")
                     });
             },
