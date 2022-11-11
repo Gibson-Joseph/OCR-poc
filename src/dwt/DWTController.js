@@ -62,6 +62,8 @@ export default function DWTController(props) {
 
 
     const [saveFileFormat] = useState("pdf");
+    const [saveFileName, setSaveFileName] = useState((new Date()).getTime().toString());
+
 
     useEffect(() => {
         DWObject = props.dwt;
@@ -178,38 +180,83 @@ export default function DWTController(props) {
     const saveOrUploadImage = (_type) => {
         props.setLoading(true)
         let fileType = 0;
+        let fileName = saveFileName + "." + saveFileFormat;
 
-        DWObject.ConvertToBase64(
-            [props.buffer.current],
-            fileType,
-            function (result, indices, type) {
-                let base64Str = result.getData(props.buffer.current, result.getLength(), indices)
-                console.log(base64Str);
-                Api("/v1/save_pdf", {
-                    method: "POST",
-                    data: {
-                        base64: base64Str
-                    },
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                })
-                    .then((data) => {
-                        console.log('data from node server', data);
-                        props.setBack(false)
-                        navigate("/form", { state: data.data })
-                        DWObject.RemoveImage(props.buffer.count)
+        let onSuccess = () => {
+            console.log("onSuccess is called");
+            setSaveFileName((new Date()).getTime().toString());
+
+            DWObject.ConvertToBase64(
+                [props.buffer.current],
+                fileType,
+                function (result, indices, type) {
+                    let base64Str = result.getData(props.buffer.current, result.getLength(), indices)
+                    console.log(base64Str);
+                    Api("/v1/save_pdf", {
+                        method: "POST",
+                        data: {
+                            base64: base64Str
+                        },
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
                     })
-                    .catch((err) => {
-                        console.log("response err", err);
-                        toastMsg("error", "OCR conversion failed, Kindly update the form manually");
-                        navigate("/form")
-                    });
-            },
-            function (errorCode, errorString) {
-                console.log("---------", errorString);
-            }
-        );
+                        .then((data) => {
+                            console.log('data from node server', data);
+                            props.setBack(false)
+                            navigate("/form", { state: data.data })
+                            DWObject.RemoveImage(props.buffer.count)
+                        })
+                        .catch((err) => {
+                            console.log("response err", err);
+                            toastMsg("error", "OCR conversion failed, Kindly update the form manually");
+                            navigate("/form")
+                        });
+                },
+                function (errorCode, errorString) {
+                    console.log("---------", errorString);
+                }
+            );
+
+        };
+        let onFailure = (errorCode, errorString, httpResponse) => {
+            console.log("onFilure is Called",errorString);
+        };
+
+        DWObject.SaveAsPDF(fileName, props.buffer.current, onSuccess, onFailure);
+
+
+        // DWObject.ConvertToBase64(
+        //     [props.buffer.current],
+        //     fileType,
+        //     function (result, indices, type) {
+        //         let base64Str = result.getData(props.buffer.current, result.getLength(), indices)
+        //         console.log(base64Str);
+        //         Api("/v1/save_pdf", {
+        //             method: "POST",
+        //             data: {
+        //                 base64: base64Str
+        //             },
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //             },
+        //         })
+        //             .then((data) => {
+        //                 console.log('data from node server', data);
+        //                 props.setBack(false)
+        //                 navigate("/form", { state: data.data })
+        //                 DWObject.RemoveImage(props.buffer.count)
+        //             })
+        //             .catch((err) => {
+        //                 console.log("response err", err);
+        //                 toastMsg("error", "OCR conversion failed, Kindly update the form manually");
+        //                 navigate("/form")
+        //             });
+        //     },
+        //     function (errorCode, errorString) {
+        //         console.log("---------", errorString);
+        //     }
+        // );
 
         if (_type !== "local" && _type !== "server") return;
 
