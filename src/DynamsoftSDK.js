@@ -103,7 +103,8 @@ export default function DWT(props) {
     ];
     Dynamsoft.DWT.ResourcesPath = "/dwt-resources";
     Dynamsoft.DWT.ProductKey =
-      "t00986QAAAGFfeK5WY0Ldwc3sjAFkzBDP0+nVaJtFs2hTb68+r6PtAcqn/ly/0o2OfaNKC3u4bZFI8LmHrj2s8Akh0zCG7WkN5F2xhb43l9ckzM7VqBuZxtJv2EzJKqRcb07SMOo=";
+      // "t00986QAAAGFfeK5WY0Ldwc3sjAFkzBDP0+nVaJtFs2hTb68+r6PtAcqn/ly/0o2OfaNKC3u4bZFI8LmHrj2s8Akh0zCG7WkN5F2xhb43l9ckzM7VqBuZxtJv2EzJKqRcb07SMOo=";
+      "t00986QAAACZe4WmTV2vskYiGPDyPuGjmx4h0RNiuEnhzxeOS5aRrcdS7DvGKmDfruUtotXEgxh4aoC2bk34N6f0bzN1RtQ3y/2oc/N4TUZ0TkadVPDWPoNmykiqsp8A9QYL8w=";
     let innerLoad = (UseService) => {
       innerLoadDWT(UseService).then(
         (_DWObject) => {
